@@ -161,7 +161,7 @@ module.exports = function(grunt) {
                      ]));
 
   grunt.registerTask('deploy', "Generate assets with build:dist and deploy to s3.", filterAvailable([
-                     'build:dist',
+                     'dist',
                      's3'
                      ]))
 
