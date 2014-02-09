@@ -1,3 +1,15 @@
 <h2 id='title'>Shibe.io</h2>
 
 {{outlet}}
+
+<p>
+  {{#if apiIsUp}}
+    The API is up! Hooray!
+  {{else}}
+    {{#if checkingApi}}
+      Checking API status...
+    {{else}}
+      The API could not be accessed.
+    {{/if}}
+  {{/if}}
+</p>
