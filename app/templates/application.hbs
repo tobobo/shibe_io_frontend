@@ -3,13 +3,15 @@
 {{outlet}}
 
 <p>
-  {{#if apiIsUp}}
-    The API is up! Hooray!
-  {{else}}
-    {{#if checkingApi}}
-      Checking API status...
+  <small>
+    {{#if apiIsUp}}
+      The API is up! Hooray!
     {{else}}
-      The API could not be accessed.
+      {{#if checkingApi}}
+        <em>Checking API status...</em>
+      {{else}}
+        The API could not be accessed.
+      {{/if}}
     {{/if}}
-  {{/if}}
+  <small>
 </p>
