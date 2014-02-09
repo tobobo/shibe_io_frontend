@@ -4,3 +4,5 @@
 // endpoint in development than in production.
 //
 // window.ENV.public_key = '123456'
+
+window.ENV.SHIBE_API_URL = 'http://api-v1.shibe.io'

@@ -1,5 +1,5 @@
 ApplicationController = Ember.ObjectController.extend
-  apiHost: 'http://api-v1.shibe.io'
+  apiHost: window.ENV.SHIBE_API_URL
   checkingApi: true
   apiIsUp: ((prop, value) ->
     if value? then value
