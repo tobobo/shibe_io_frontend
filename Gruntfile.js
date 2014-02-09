@@ -160,6 +160,11 @@ module.exports = function(grunt) {
                      'htmlmin:dist' // Removes comments and whitespace
                      ]));
 
+  grunt.registerTask('deploy', "Generate assets with build:dist and deploy to s3.", filterAvailable([
+                     'build:dist',
+                     's3'
+                     ]))
+
   // Parallelize most of the build process
   _.merge(config, {
     concurrent: {
