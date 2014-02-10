@@ -9,8 +9,8 @@ ShibeLoginComponent = Ember.Component.extend
     Ember.get('App.applicationController.apiHost') + '/users/activate'
   ).property 'App.applicationController.apiHost'
   hideForm: (->
-    @get('activationSent') or @get('accountActivated')
-  ).property 'activationSent', 'accountActivated'
+    @get('activationSent') or @get('accountActivated') or @get('loginSuccessful')
+  ).property 'activationSent', 'accountActivated', 'loginSuccessful'
   actions:
     submit: ->
       if @get('activationToken')
@@ -21,14 +21,29 @@ ShibeLoginComponent = Ember.Component.extend
             url: @get('activateUrl')
             data: @getProperties('email', 'password', 'activationToken')
             success: (data) =>
+              @set 'activationError', false
+              @set 'userInactive', false
               @set 'accountActivated', true
             error: (error) =>
               @set 'activationError', true
+              @set 'userInactive', false
         else
           @set 'activationError', false
           @set 'activationDetailsMissing', true
+          @set 'userInactive', false
       else
         if @get('email') and @get('password')
+          $.ajax
+            method: 'POST'
+            url: @get('loginUrl')
+            data: @getProperties('email', 'password')
+            success: (data) =>
+              @set 'loginSuccessful', true
+              @set 'loginError', false
+              @set 'userInactive', false
+            error: (error) =>
+              @set 'loginError', true
+              @set 'userInactive', false
         else if @get('email')
           $.ajax
             method: 'POST'

@@ -15,9 +15,13 @@
 {{/if}}
 
 <p>
+{{#if loginSuccessful}}You have been logged in.{{/if}}
+{{#if loginError}}Sorry, there was an error with your login credentials.{{/if}}
+
 {{#if activationError}}Sorry, there was a problem with the information you entered to activate your account.{{/if}}
 {{#if accountActivated}}Congratulations! Your account has been activated.{{/if}}
 {{#if activationDetailsMissing}}Please enter your email and password to activate your account.{{/if}}
+
 {{#if noPassword}}You are registered but you did not enter your password. Forgot password?{{/if}}
 {{#if userInactive}}You have already registered but have not activated your account. Resend activation email?{{/if}}
 {{#if activationSent}}Thank you! We have sent an activation email to the address you provided.{{/if}}
