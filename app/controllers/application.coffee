@@ -2,7 +2,7 @@ ApplicationController = Ember.ObjectController.extend
   apiHost: window.ENV.SHIBE_API_URL
   checkingApi: true
   init: ->
-    Ember.set 'App.applicationController', @
+    App.set 'applicationController', @
   apiIsUp: ((prop, value) ->
     if value? then value
     else
@@ -19,6 +19,12 @@ ApplicationController = Ember.ObjectController.extend
       false
   ).property()
 
-console.log 'howdy there'
+  currentUserId: ((prop, value) ->
+    if value? then return value
+    else
+      cookie = $.cookie('shibe')
+      if cookie
+        cookie.match(/"([^"]*)"/)[1]
+  ).property()
 
 `export default ApplicationController`

@@ -5,7 +5,7 @@
   {{input value=email placeholder='email' action='login'}}
   {{input value=password type='password' placeholder='password' action='login'}}
   
-  <a href="#" {{action 'submit'}}>
+  <a href="#" {{action 'submit' target='view'}}>
     {{#if activationToken}}
       Activate Account
     {{else}}

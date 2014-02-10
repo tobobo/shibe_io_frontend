@@ -1,4 +1,12 @@
 ShibeLoginComponent = Ember.Component.extend
+  currentUserId: ((prop, value) ->
+    if value?
+      App.set 'applicationController.currentUserId', value
+      value
+    else
+      App.get('applicationController.currentUserId')
+  ).property()
+
   loginUrl: (->
     Ember.get('App.applicationController.apiHost') + '/users/login'
   ).property 'App.applicationController.apiHost'
@@ -9,8 +17,8 @@ ShibeLoginComponent = Ember.Component.extend
     Ember.get('App.applicationController.apiHost') + '/users/activate'
   ).property 'App.applicationController.apiHost'
   hideForm: (->
-    @get('activationSent') or @get('accountActivated') or @get('loginSuccessful')
-  ).property 'activationSent', 'accountActivated', 'loginSuccessful'
+    @get('activationSent') or @get('accountActivated') or @get('loginSuccessful') or @get('currentUserId')?
+  ).property 'activationSent', 'accountActivated', 'loginSuccessful', 'currentUserId'
   actions:
     submit: ->
       if @get('activationToken')
@@ -20,6 +28,8 @@ ShibeLoginComponent = Ember.Component.extend
             method: 'POST'
             url: @get('activateUrl')
             data: @getProperties('email', 'password', 'activationToken')
+            xhrFields:
+              withCredentials: true
             success: (data) =>
               @set 'activationError', false
               @set 'userInactive', false
@@ -37,8 +47,12 @@ ShibeLoginComponent = Ember.Component.extend
             method: 'POST'
             url: @get('loginUrl')
             data: @getProperties('email', 'password')
+            dataType: 'json'
+            xhrFields:
+              withCredentials: true
             success: (data) =>
               @set 'loginSuccessful', true
+              @set 'currentUserId', data.user._id
               @set 'loginError', false
               @set 'userInactive', false
             error: (error) =>
@@ -49,6 +63,8 @@ ShibeLoginComponent = Ember.Component.extend
             method: 'POST'
             url: @get('registerUrl')
             data: @getProperties('email')
+            xhrFields:
+              withCredentials: true
             success: (data) =>
               @set 'noPassword', false
               @set 'userInactive', false
