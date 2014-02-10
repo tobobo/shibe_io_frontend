@@ -1,7 +1,10 @@
-{{input value=email placeholder='email' action='login'}}
-{{input value=password type='password' placeholder='password' action='login'}}
+{{#if hideForm}}{{else}}
+  {{input value=email placeholder='email' action='login'}}
+  {{input value=password type='password' placeholder='password' action='login'}}
 
-<a href="#" {{action 'submit'}}>Get Started</a>
+  <a href="#" {{action 'submit'}}>Get Started</a>
+{{/if}}
+
 <p>
 {{#if noPassword}}You are registered but you did not enter your password. Forgot password?{{/if}}
 {{#if userInactive}}You have already registered but have not activated your account. Resend activation email?{{/if}}
