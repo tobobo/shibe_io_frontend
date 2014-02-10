@@ -6,6 +6,6 @@ Router.map ->
     path: 'activate'
   , ->
     @resource 'activation',
-      path: ':activation_id'
+      path: ':activationToken'
 
 `export default Router`
