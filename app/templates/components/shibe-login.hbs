@@ -1,0 +1,9 @@
+{{input value=email placeholder='email' action='login'}}
+{{input value=password type='password' placeholder='password' action='login'}}
+
+<a href="#" {{action 'submit'}}>Get Started</a>
+<p>
+{{#if noPassword}}You are registered but you did not enter your password. Forgot password?{{/if}}
+{{#if userInactive}}You have already registered but have not activated your account. Resend activation email?{{/if}}
+{{#if activationSent}}Thank you! We have sent an activation email to the address you provided.{{/if}}
+</p>
