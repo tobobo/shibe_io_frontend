@@ -9,7 +9,7 @@ ShibeLoginComponent = Ember.Component.extend
     Ember.get('App.applicationController.apiHost') + '/users/activate'
   ).property 'App.applicationController.apiHost'
   hideForm: (->
-    @get('activationSent')
+    @get('activationSent') or @get('accountActivated')
   ).property 'activationSent'
   actions:
     submit: ->
