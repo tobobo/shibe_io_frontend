@@ -1,5 +1,8 @@
 ApplicationController = Ember.ObjectController.extend
   apiHost: window.ENV.SHIBE_API_URL
+  logoutUrl: (->
+    @get('apiHost') + '/users/logout'
+  ).property 'apiHost'
   checkingApi: true
   init: ->
     App.set 'applicationController', @
@@ -7,6 +10,9 @@ ApplicationController = Ember.ObjectController.extend
     if value? then value
     else
       $.ajax
+        method: 'get'
+        xhrFields:
+          withCredentials: true
         url: @get('apiHost')
         success: (data) =>
           if data?
@@ -24,7 +30,21 @@ ApplicationController = Ember.ObjectController.extend
     else
       cookie = $.cookie('shibe')
       if cookie
-        cookie.match(/"([^"]*)"/)[1]
+        matches =cookie.match(/"([^"]*)"/)
+        if matches
+          matches[1]
   ).property()
+
+  actions:
+    logout: ->
+      $.ajax
+        method: 'delete'
+        url: @get 'logoutUrl'
+        xhrFields:
+          withCredentials: true
+        success: =>
+          window.location.href = window.location.host
+          window.location.reload()
+
 
 `export default ApplicationController`
