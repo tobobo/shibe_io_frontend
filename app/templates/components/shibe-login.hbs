@@ -2,16 +2,34 @@
   {{#if activationToken}}
     <p>Confirm your email address and enter your desired password to activate your acount.</p>
   {{/if}}
-  {{input value=email placeholder='email' action='login'}}
-  {{input value=password type='password' placeholder='password' action='login'}}
-  
-  <a href="#" {{action 'submit' target='view'}}>
-    {{#if activationToken}}
-      Activate Account
+  <p>{{input id='username' value=email placeholder='email' action='login'}}</p>
+  <p>{{input type=checkbox checkedBinding=showPassword}}Already have an account?</p>
+  {{#if showPassword}}
+    <p>{{input id='password' value=password type='password' placeholder='password' action='login'}}</p>
+  {{/if}}
+  <p>
+    {{#if loading}}
+      <em>
+        {{#if activationToken}}
+          Activating...
+        {{else}}
+          {{#if password}}
+            Logging in...
+          {{else}}
+            Submitting...
+          {{/if}}
+        {{/if}}
+      </em>
     {{else}}
-      Get Started
+      <a href="#" {{action 'submit' target='view'}}>
+        {{#if activationToken}}
+          Activate Account
+        {{else}}
+          Get Started
+        {{/if}}
+      </a>
     {{/if}}
-  </a>
+  </p>
 {{/if}}
 
 <p>

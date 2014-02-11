@@ -19,11 +19,36 @@ ShibeLoginComponent = Ember.Component.extend
   hideForm: (->
     @get('activationSent') or @get('accountActivated') or @get('loginSuccessful') or @get('currentUserId')?
   ).property 'activationSent', 'accountActivated', 'loginSuccessful', 'currentUserId'
+
+  didInsertElement: ->
+    @send 'bindEvents'
+
+  showPasswordDidChange: (->
+    Ember.run.next =>
+      @send 'bindEvents'
+  ).observes 'showPassword'
+
+
   actions:
+    bindEvents: ->
+      @$('input').unbind 'keydown'
+      @$('input:not(:checkbox)').bind 'keydown', (e) =>
+        if e.keyCode == 13
+          @send 'submit'      
+    
+      @$('input:checkbox').bind 'keydown', (e) =>
+        if e.keyCode == 9 and not (e.metaKey or e.shiftKey)
+          e.preventDefault()
+          @$('input:checkbox').attr 'checked', true
+          @set 'showPassword', true
+          Ember.run.next =>
+            @$('input[type=password]').focus()
+
     submit: ->
       if @get('activationToken')
         if @get('email') and @get('password')
           @set 'activationDetailsMissing', false
+          @set 'loading', true
           $.ajax
             method: 'POST'
             url: @get('activateUrl')
@@ -37,12 +62,15 @@ ShibeLoginComponent = Ember.Component.extend
             error: (error) =>
               @set 'activationError', true
               @set 'userInactive', false
+            complete: =>
+              @set 'loading', false
         else
           @set 'activationError', false
           @set 'activationDetailsMissing', true
           @set 'userInactive', false
       else
         if @get('email') and @get('password')
+          @set 'loading', true
           $.ajax
             method: 'POST'
             url: @get('loginUrl')
@@ -58,7 +86,10 @@ ShibeLoginComponent = Ember.Component.extend
             error: (error) =>
               @set 'loginError', true
               @set 'userInactive', false
+            complete: =>
+              @set 'loading', false
         else if @get('email')
+          @set 'loading', true
           $.ajax
             method: 'POST'
             url: @get('registerUrl')
@@ -75,5 +106,7 @@ ShibeLoginComponent = Ember.Component.extend
                 @set 'noPassword', true
               else
                 @set 'userInactive', true
+            complete: =>
+              @set 'loading', false
 
 `export default ShibeLoginComponent`
