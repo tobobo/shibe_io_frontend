@@ -3,7 +3,9 @@
     <p>Confirm your email address and enter your desired password to activate your acount.</p>
   {{/if}}
   <p>{{input id='username' value=email placeholder='email' action='login'}}</p>
-  <p>{{input type=checkbox checkedBinding=showPassword}}Already have an account?</p>
+  {{#if showAccountCheckbox}}
+    <p>{{input type=checkbox checkedBinding=showPassword}}Already have an account?</p>
+  {{/if}}
   {{#if showPassword}}
     <p>{{input id='password' value=password type='password' placeholder='password' action='login'}}</p>
   {{/if}}

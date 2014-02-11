@@ -19,7 +19,14 @@ ShibeLoginComponent = Ember.Component.extend
   hideForm: (->
     @get('activationSent') or @get('accountActivated') or @get('loginSuccessful') or @get('currentUserId')?
   ).property 'activationSent', 'accountActivated', 'loginSuccessful', 'currentUserId'
-
+  showPassword: ((prop, value) ->
+    if value? then value
+    else @get('activationToken')?
+  ).property 'activationToken'
+  showAccountCheckbox: ((prop, value) ->
+    if value? then value
+    else not @get('activationToken')?
+  ).property 'activationToken'
   didInsertElement: ->
     @send 'bindEvents'
 
