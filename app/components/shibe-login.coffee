@@ -2,7 +2,7 @@
 
 ShibeLoginComponent = Ember.Component.extend
   currentUserId: ((prop, value) ->
-    if value?
+    if value != undefined
       App.set 'applicationController.currentUserId', value
       value
     else
@@ -86,9 +86,11 @@ ShibeLoginComponent = Ember.Component.extend
             method: 'POST'
             url: @get('activateUrl')
             data: @getProperties('email', 'password', 'activationToken')
+            dataType: 'json'
             xhrFields:
               withCredentials: true
             success: (data) =>
+              @set 'currentUserId', data.user.id
               @set 'activationError', false
               @set 'userInactive', false
               @set 'accountActivated', true
