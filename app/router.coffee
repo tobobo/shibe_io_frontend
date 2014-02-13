@@ -8,4 +8,10 @@ Router.map ->
     @resource 'activation',
       path: ':activationToken'
 
+  @resource 'confirmations',
+    path: 'confirm'
+  , ->
+    @resource 'confirmation',
+      path: ':confirmationToken'
+
 `export default Router`
