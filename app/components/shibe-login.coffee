@@ -7,6 +7,30 @@ ShibeLoginComponent = Ember.Component.extend
       App.get('applicationController.currentUserId')
   ).property()
 
+  loadingMessage: (->
+    if @get('activationToken')?
+      "Activating..."
+    else if @get('transaction.confirmationCode')?
+      "Confirming..."
+    else if @get('transaction.acceptanceCode')?
+      "Accepting..."
+    else if @get('password')?
+      "Logging in..."
+    else
+      "Submitting..."
+  ).property 'activationToken', 'password', 'transaction.confirmationCode', 'transaction.acceptanceCode'
+
+  buttonMessage: (->
+    if @get('activationToken')?
+      "Activate Account"
+    else if @get('transaction.confirmationCode')?
+      "Confirm"
+    else if @get('transaction.acceptanceCode')?
+      "Accept"
+    else
+      "Get Started"
+  ).property 'activationToken', 'transaction.confirmationCode', 'transaction.acceptanceCode'
+
   loginUrl: (->
     Ember.get('App.applicationController.apiHost') + '/users/login'
   ).property 'App.applicationController.apiHost'
@@ -21,11 +45,11 @@ ShibeLoginComponent = Ember.Component.extend
   ).property 'activationSent', 'accountActivated', 'loginSuccessful', 'currentUserId'
   showPassword: ((prop, value) ->
     if value? then value
-    else @get('activationToken')?
-  ).property 'activationToken'
+    else @get('activationToken')? or @get('transaction')?
+  ).property 'activationToken', 'transaction'
   showAccountCheckbox: ((prop, value) ->
     if value? then value
-    else not @get('activationToken')?
+    else not @get('activationToken')? and not @get('transaction')?
   ).property 'activationToken'
   didInsertElement: ->
     @send 'bindEvents'

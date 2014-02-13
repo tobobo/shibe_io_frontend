@@ -11,25 +11,9 @@
   {{/if}}
   <p>
     {{#if loading}}
-      <em>
-        {{#if activationToken}}
-          Activating...
-        {{else}}
-          {{#if password}}
-            Logging in...
-          {{else}}
-            Submitting...
-          {{/if}}
-        {{/if}}
-      </em>
+      <em>{{loadingMessage}}</em>
     {{else}}
-      <a href="#" {{action 'submit' target='view'}}>
-        {{#if activationToken}}
-          Activate Account
-        {{else}}
-          Get Started
-        {{/if}}
-      </a>
+      <a href="#" {{action 'submit' target='view'}}>{{buttonMessage}}</a>
     {{/if}}
   </p>
 {{/if}}

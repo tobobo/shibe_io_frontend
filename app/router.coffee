@@ -12,6 +12,6 @@ Router.map ->
     path: 'confirm'
   , ->
     @resource 'confirmation',
-      path: ':confirmationToken'
+      path: ':confirmationCode'
 
 `export default Router`
