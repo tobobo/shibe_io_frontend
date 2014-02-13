@@ -87,7 +87,7 @@ ShibeLoginComponent = Ember.Component.extend
               withCredentials: true
             success: (data) =>
               @set 'loginSuccessful', true
-              @set 'currentUserId', data.user._id
+              @set 'currentUserId', data.user.id
               @set 'loginError', false
               @set 'userInactive', false
             error: (error) =>
