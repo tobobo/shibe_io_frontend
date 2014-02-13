@@ -1,3 +1,5 @@
+`import Transaction from 'appkit/models/transaction'`
+
 ShibeLoginComponent = Ember.Component.extend
   currentUserId: ((prop, value) ->
     if value?
@@ -41,8 +43,8 @@ ShibeLoginComponent = Ember.Component.extend
     Ember.get('App.applicationController.apiHost') + '/users/activate'
   ).property 'App.applicationController.apiHost'
   hideForm: (->
-    @get('activationSent') or @get('accountActivated') or @get('loginSuccessful') or @get('currentUserId')?
-  ).property 'activationSent', 'accountActivated', 'loginSuccessful', 'currentUserId'
+    @get('activationSent') or @get('accountActivated') or @get('loginSuccessful') or @get('currentUserId')? or @get('transactionConfirmed')?
+  ).property 'activationSent', 'accountActivated', 'loginSuccessful', 'currentUserId', 'transactionConfirmed'
   showPassword: ((prop, value) ->
     if value? then value
     else @get('activationToken')? or @get('transaction')?
@@ -77,7 +79,7 @@ ShibeLoginComponent = Ember.Component.extend
 
     submit: ->
       if @get('activationToken')
-        if @get('email') and @get('password')
+        if @get('email')? and @get('password')?
           @set 'activationDetailsMissing', false
           @set 'loading', true
           $.ajax
@@ -99,8 +101,27 @@ ShibeLoginComponent = Ember.Component.extend
           @set 'activationError', false
           @set 'activationDetailsMissing', true
           @set 'userInactive', false
+      else if @get('transaction.confirmationCode')?
+        if @get('email')? and @get('password')?
+          console.log 'get email'
+          @set 'loading', true
+          @set 'transaction.userEmail', @get('email')
+          @set 'transaction.userPassword', @get('password')
+          @set 'transaction.confirmation', Transaction.CONFIRMATION.ACCEPTED
+          @get('transaction').save()
+            .then (transaction) =>
+              @set 'confirmationDetailsMissing', false
+              @set 'transactionConfirmed', true
+              @set 'loading', false
+              App.applicationController.send 'getIdFromCookie'
+            , (error) =>
+              @set 'confirmationDetailsMissing', false
+              @set 'confirmationAuthError', true
+              @set 'loading', false
+        else
+          @set 'confirmationDetailsMissing', true
       else
-        if @get('email') and @get('password')
+        if @get('email')? and @get('password')?
           @set 'loading', true
           $.ajax
             method: 'POST'
@@ -119,7 +140,7 @@ ShibeLoginComponent = Ember.Component.extend
               @set 'userInactive', false
             complete: =>
               @set 'loading', false
-        else if @get('email')
+        else if @get('email')?
           @set 'loading', true
           $.ajax
             method: 'POST'

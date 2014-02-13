@@ -26,16 +26,21 @@ ApplicationController = Ember.ObjectController.extend
   ).property()
 
   currentUserId: ((prop, value) ->
-    if value? then return value
+    if value != undefined then value
     else
-      cookie = $.cookie('shibe')
-      if cookie
-        matches =cookie.match(/"([^"]*)"/)
-        if matches
-          matches[1]
+      @send 'getIdFromCookie'
   ).property()
 
   actions:
+    getIdFromCookie: ->
+      cookie = $.cookie('shibe')
+      if cookie
+        matches =cookie.match(/"([^"]*)"/)
+        if matches? and matches.length > 1
+          id = matches[1]
+          @set 'currentUserId', id
+          id
+
     logout: ->
       $.ajax
         method: 'delete'

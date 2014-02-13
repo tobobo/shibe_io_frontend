@@ -19,6 +19,9 @@
 {{/if}}
 
 <p>
+{{#if confirmationDetailsMissing}}Please enter a valid email address and password to confirm this transaction{{/if}}
+{{#if confirmationAuthError}}Sorry, there was a problem with the email and password you provided.{{/if}}
+{{#if transactionConfirmed}}This transaction has been confirmed.{{/if}}
 {{#if loginSuccessful}}You have been logged in.{{/if}}
 {{#if loginError}}Sorry, there was an error with your login credentials.{{/if}}
 

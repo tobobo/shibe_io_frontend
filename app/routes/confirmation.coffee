@@ -1,3 +1,5 @@
+`import Transaction from 'appkit/models/transaction'`
+
 ConfirmationRoute = Ember.Route.extend
   model: (params) ->
     console.log 'modeling'
@@ -10,7 +12,7 @@ ConfirmationRoute = Ember.Route.extend
         resolve transaction
 
   afterModel: (model) ->
-    if model?
+    if model? and parseInt(model.get('confirmation')) == parseInt(Transaction.CONFIRMATION.PENDING)
       @controllerFor('application').set 'currentUserId', null
     else
       @replaceWith 'index'
