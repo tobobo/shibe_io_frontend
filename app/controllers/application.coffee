@@ -1,11 +1,13 @@
 ApplicationController = Ember.ObjectController.extend
   apiHost: window.ENV.SHIBE_API_URL
+  currentUserId: null
   logoutUrl: (->
     @get('apiHost') + '/users/logout'
   ).property 'apiHost'
   checkingApi: true
   init: ->
     App.set 'applicationController', @
+    @send 'getIdFromCookie'
   apiIsUp: ((prop, value) ->
     if value? then value
     else
@@ -25,21 +27,23 @@ ApplicationController = Ember.ObjectController.extend
       false
   ).property()
 
-  currentUserId: ((prop, value) ->
-    if value != undefined then value
-    else
-      @send 'getIdFromCookie'
-  ).property()
+  currentUserIdDidChange: (->
+    console.log 'user id changed', @get('currentUserId')
+  ).observes 'currentUserId'
 
   actions:
     getIdFromCookie: ->
+      console.log 'getting cookie'
       cookie = $.cookie('shibe')
       if cookie
+        console.log cookie
         matches =cookie.match(/"([^"]*)"/)
         if matches? and matches.length > 1
+          console.log 'matches'
           id = matches[1]
+          console.log 'id', id
           @set 'currentUserId', id
-          id
+          console.log 'aftersetting', @get('currentUserId')
 
     logout: ->
       $.ajax
