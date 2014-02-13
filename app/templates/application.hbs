@@ -17,5 +17,13 @@
 </p>
 
 {{#if currentUserId}}
-  You are logged in ({{currentUserId}}) <a href="#" {{action 'logout'}}>Log Out</a>
+  {{#if currentUser.id}}
+    <p>You are logged in as {{currentUser.email}}</p>
+    <p>Your balance is {{currentUser.balance}} DOGE</p>
+    <p>You can deposit more doge to {{currentUser.depositAddress}}</p>
+    <p><a href="#" {{action logout}}>Log Out</a></p>
+  {{else}}
+    <p>You are logged in...</p>
+    <p><a href="#" {{action logout}}>Log Out</a></p>
+  {{/if}}
 {{/if}}

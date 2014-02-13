@@ -1,6 +1,22 @@
 ApplicationController = Ember.ObjectController.extend
   apiHost: window.ENV.SHIBE_API_URL
   currentUserId: null
+  currentUserLoading: false
+  currentUser: ((prop, value) ->
+    @set 'currentUserLoading', true
+    if value? then value
+    else
+      if @get('currentUserId')
+        @store.find 'user', @get('currentUserId')
+        .then (user) =>
+          @set 'currentUser', user
+          @set 'currentUserLoading', false
+        , (error) =>
+          console.log 'user error', error
+          @set 'currentUserId', null
+          @set 'currentUserLoading', false
+      null
+  ).property 'currentUserId'
   logoutUrl: (->
     @get('apiHost') + '/users/logout'
   ).property 'apiHost'
@@ -29,12 +45,17 @@ ApplicationController = Ember.ObjectController.extend
 
   currentUserIdDidChange: (->
     console.log 'user id changed', @get('currentUserId')
+    unless @get('currentUserId')?
+      @send 'removeIdCookie'
   ).observes 'currentUserId'
+
+
+  cookieName: 'shibe'
 
   actions:
     getIdFromCookie: ->
       console.log 'getting cookie'
-      cookie = $.cookie('shibe')
+      cookie = $.cookie @get('cookieName')
       if cookie
         console.log cookie
         matches =cookie.match(/"([^"]*)"/)
@@ -42,8 +63,12 @@ ApplicationController = Ember.ObjectController.extend
           console.log 'matches'
           id = matches[1]
           console.log 'id', id
-          @set 'currentUserId', id
-          console.log 'aftersetting', @get('currentUserId')
+          if id
+            @set 'currentUserId', id
+            console.log 'aftersetting', @get('currentUserId')
+
+    removeIdCookie: ->
+      $.cookie @get('cookieName'), null
 
     logout: ->
       $.ajax

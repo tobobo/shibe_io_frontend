@@ -7,7 +7,7 @@ ShibeLoginComponent = Ember.Component.extend
       value
     else
       App.get('applicationController.currentUserId')
-  ).property()
+  ).property 'App.applicationController.currentUserId'
 
   loadingMessage: (->
     if @get('activationToken')?
@@ -134,7 +134,7 @@ ShibeLoginComponent = Ember.Component.extend
               withCredentials: true
             success: (data) =>
               @set 'loginSuccessful', true
-              @set 'currentUserId', data.user.id
+              App.applicationController.send 'getIdFromCookie'
               @set 'loginError', false
               @set 'userInactive', false
             error: (error) =>
