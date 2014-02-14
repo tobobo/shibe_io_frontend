@@ -3,9 +3,9 @@
 
 console.log 'ttr', TransactionTokenRoute
 
-ConfirmationRoute = TransactionTokenRoute.extend
+AcceptanceRoute = TransactionTokenRoute.extend
 
   transactionIsValid: (transaction) ->
-    parseInt(transaction.get('confirmation')) == parseInt(Transaction.CONFIRMATION.PENDING)
+    parseInt(transaction.get('acceptance')) == parseInt(Transaction.ACCEPTANCE.PENDING)
 
-`export default ConfirmationRoute`
+`export default AcceptanceRoute`

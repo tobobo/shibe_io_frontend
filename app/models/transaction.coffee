@@ -7,6 +7,7 @@ Transaction = DS.Model.extend
   to: DS.attr 'string'
   status: DS.attr 'number'
   acceptance: DS.attr 'number'
+  acceptanceCode: DS.attr 'string'
   confirmation: DS.attr 'number'
   confirmationCode: DS.attr 'string'
   userEmail: DS.attr 'string'

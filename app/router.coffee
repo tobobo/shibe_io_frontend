@@ -14,4 +14,10 @@ Router.map ->
     @resource 'confirmation',
       path: ':confirmationCode'
 
+  @resource 'acceptances',
+    path: 'accept'
+  , ->
+    @resource 'acceptance',
+      path: ':acceptanceCode'
+
 `export default Router`

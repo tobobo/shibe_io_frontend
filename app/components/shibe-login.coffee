@@ -43,7 +43,7 @@ ShibeLoginComponent = Ember.Component.extend
     Ember.get('App.applicationController.apiHost') + '/users/activate'
   ).property 'App.applicationController.apiHost'
   hideForm: (->
-    @get('activationSent') or @get('accountActivated') or @get('loginSuccessful') or @get('currentUserId')? or @get('transactionConfirmed')?
+    @get('activationSent') or @get('accountActivated') or @get('loginSuccessful') or @get('currentUserId')? or @get('transactionConfirmed')? or @get('transactionAccepted')?
   ).property 'activationSent', 'accountActivated', 'loginSuccessful', 'currentUserId', 'transactionConfirmed'
   showPassword: ((prop, value) ->
     if value? then value
@@ -122,6 +122,24 @@ ShibeLoginComponent = Ember.Component.extend
               @set 'loading', false
         else
           @set 'confirmationDetailsMissing', true
+
+      else if @get('transaction.acceptanceCode')?
+        console.log 'get email'
+        @set 'loading', true
+        @set 'transaction.userEmail', @get('email')
+        @set 'transaction.userPassword', @get('password')
+        @set 'transaction.acceptance', Transaction.ACCEPTANCE.ACCEPTED
+        console.log 'acceptance accepted', Transaction.ACCEPTANCE.ACCEPTED
+        @get('transaction').save()
+          .then (transaction) =>
+            @set 'acceptanceDetailsMissing', false
+            @set 'transactionAccepted', true
+            @set 'loading', false
+            App.applicationController.send 'getIdFromCookie'
+          , (error) =>
+            @set 'acceptanceDetailsMissing', false
+            @set 'acceptanceAuthError', true
+            @set 'loading', false
       else
         if @get('email')? and @get('password')?
           @set 'loading', true
