@@ -4,6 +4,7 @@ module.exports = {
       secret: process.env.SHIBE_AWS_SECRET_ACCESS_KEY,
       bucket: process.env.SHIBE_AWS_BUCKET,
       region: process.env.SHIBE_AWS_REGION,
+      gzip: true,
       headers: {
         // Two Year cache policy (1000 * 60 * 60 * 24 * 730)
         //"Cache-Control": "max-age=630720000, public",
