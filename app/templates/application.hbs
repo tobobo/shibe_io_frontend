@@ -20,7 +20,12 @@
   {{#if currentUser.id}}
     <p>You are logged in as {{currentUser.email}}</p>
     <p>Your balance is {{currentUser.balance}} DOGE</p>
-    <p>You can deposit more doge to {{currentUser.depositAddress}}</p>
+    {{#if currentUser.depositAddress}}
+      <p>You can deposit more doge to {{currentUser.depositAddress}}</p>
+      {{qr-code content=currentUser.depositAddress}}
+    {{else}}
+      <p>Your deposit address is stil being generated.</p>
+    {{/if}}
     <p><a href="#" {{action logout}}>Log Out</a></p>
   {{else}}
     <p>You are logged in...</p>
