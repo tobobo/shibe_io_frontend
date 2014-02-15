@@ -2,6 +2,7 @@ Transaction = DS.Model.extend
   amount: DS.attr 'number'
   createdAt: DS.attr 'date'
   receiverId: DS.attr 'string'
+  receiverAddress: DS.attr 'string'
   subject: DS.attr 'string'
   from: DS.attr 'string'
   to: DS.attr 'string'

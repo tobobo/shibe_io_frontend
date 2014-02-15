@@ -3,30 +3,38 @@
 ShibeTransaction = Ember.Component.extend
   classNames: ['shibe-transaction']
   classNameBindings: ['isCredit:credit:debit', 'isPending:pending']
+  didInsertElement: ->
+    @send 'assignScrollyness'
   personField: (->
     if @get('transaction.status') == Transaction.STATUS.DEPOSIT
-      "Deposit"
+      "deposit"
     else if @get('isCredit')
       @get 'transaction.from'
     else
-      @get 'transaction.to'
-  ).property 'transaction.status', 'transaction.from'
+      if @get('transaction.receiverAddress')?
+        @get 'receiverAddress'
+      else
+        @get 'transaction.to'
+  ).property 'transaction.status', 'transaction.from', 'transaction.to', 'transaction.receiverAddress'
+  subject: (->
+
+  ).property 'transaction.subject', 'transaction.receiverAddress'
   status: (->
     if @get('transaction.status') in [Transaction.STATUS.DEPOSIT, Transaction.STATUS.COMPLETE, Transaction.STATUS.WITHDRAWAL]
       @get('transaction.createdAt')
     else
       if @get('isCredit')
         if @get('transaction.confirmation') in [Transaction.CONFIRMATION.INSUFFICIENT_FUNDS, Transaction.CONFIRMATION.PENDING]
-          "Pending"
+          "pending"
         else if @get('transaction.confirmation') == Transaction.CONFIRMATION.ACCEPTED
-          "Confirmed"
+          "confirmed"
       else
         if @get('transaction.confirmation') == Transaction.CONFIRMATION.PENDING
-          "Not yet confirmed. Resend confirmation?"
+          "not yet confirmed. resend confirmation?"
         if @get('transaction.confirmation') == Transaction.CONFIRMATION.INSUFFICIENT_FUNDS
-          "Insufficient funds. Please deposit and re-confirm."
+          "insufficient funds. please deposit and re-confirm."
         else if @get('transaction.acceptance') == Transaction.ACCEPTANCE.PENDING
-          "Pending acceptance"
+          "pending acceptance"
         else
           @get('transaction.createdAt')
 
@@ -48,5 +56,17 @@ ShibeTransaction = Ember.Component.extend
     if @get('isCredit') then '+'
     else '-'
   ).property 'isCredit'
+  actions:
+    assignScrollyness: ->
+      scrollynessAssignment = =>
+        @$('.scroll-content').each ->
+          $this = $(@)
+          console.log $this.outerWidth(), $this[0].scrollWidth
+          if $this.outerWidth() < $this[0].scrollWidth
+            $this.addClass('scroll-active')
+          else
+            $this.removeClass('scroll-active')
+      scrollynessAssignment()
+      $(window).bind 'resize', scrollynessAssignment
 
 `export default ShibeTransaction`

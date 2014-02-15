@@ -16,6 +16,10 @@ body {
   }
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .shibe-info {
   font-size: $small-text;
   margin: 1em 0.5em;
@@ -24,10 +28,61 @@ body {
   }
 }
 
-.shibe-transaction-list {
-  border-radius: 10px;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.075);
+@-webkit-keyframes scrollContent {
+  0% {
+    -webkit-transform: translate(0, 0);
+  }
+  92% {
+    -webkit-transform: translate(-100%, 0);
+  }
+  100% {
+    -webkit-transform: translate(0, 0);
+  }
+}
+
+@-webkit-keyframes scrollContentOuter {
+  0% {
+    -webkit-transform: translate(0, 0);
+  }
+  92% {
+    -webkit-transform: translate(100%, 0);
+  }
+  100% {
+    -webkit-transform: translate(0, 0);
+  }
+}
+
+
+@mixin scroll-content {
+  .scroll-content {
+    position: relative;
+    transition: all 0.5s ease-in-out;
+    .scroll-content-inner {
+      position: absolute;
+      transition: all 0.5s ease-in-out;
+    }
+  }
+
+  &:hover {
+    .scroll-content.scroll-active {
+      -webkit-animation: scrollContentOuter 8s linear infinite;
+      .scroll-content-inner {
+        -webkit-animation: scrollContent 8s linear infinite;
+      }
+    }    
+  }
+
+}
+
+
+.application-view {
   max-width: 1024px;
+}
+
+.shibe-transaction-list {
+  $transaction-border-radius: 8px;
+  border-radius: $transaction-border-radius;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.075);
 
   .shibe-transaction {
     position: relative;
@@ -44,7 +99,15 @@ body {
       background-color: #F8F8FF;
     }
 
-    div {
+    &:first-of-type {
+      border-radius: $transaction-border-radius $transaction-border-radius 0 0 ;
+    }
+
+    &:last-of-type {
+      border-radius: 0 0 $transaction-border-radius $transaction-border-radius;
+    }
+
+    & > div {
       border-right: 1px solid #DDDDEE;
       position: absolute;
       height: 100%;
@@ -52,13 +115,13 @@ body {
       white-space: nowrap;
       padding: 0.75em 0.5em;
       box-sizing: border-box;
-    }
-
-    div:last-of-type {
-      border-right: none;
+      &:last-of-type {
+        border-right: none;
+      }
     }
 
     .arrow {
+      padding: 0.75em 0;
       width: 5%;
       left: 0;
       text-align: center;
@@ -67,11 +130,19 @@ body {
     .person {
       width: 30%;
       left: 5%;
+      padding: 0.75em 0.5em;
+      @include scroll-content;
+      .subject {
+        font-size: $small-text;
+        font-style: italic;
+        opacity: 0.5;
+      }
     }
 
     .status {
       width: 50%;
       left: 35%;
+      @include scroll-content;
     }
 
     .amount {
@@ -105,6 +176,7 @@ body {
 }
 
 .api-status {
+  text-align: right;
   font-size: $small-text;
   $inset-shadow: inset 0 0 0.5em rgba(0, 0, 0, 0.5);
   margin: 1em 0.5em;
@@ -118,7 +190,7 @@ body {
     border-radius: 0.5em;
     box-shadow: $inset-shadow;
     opacity: 0.85;
-    margin-right: 0.5em;
+    margin-left: 0.5em;
     transition: all 1s ease-in-out;
 
     &.up {
