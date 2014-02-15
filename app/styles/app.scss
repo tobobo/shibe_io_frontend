@@ -109,6 +109,10 @@ body {
       border-bottom-right-radius: $transaction-border-radius $transaction-border-radius;
     }
 
+    &:first-of-type:last-of-type:hover {
+      box-shadow: none;
+    }
+
     & > div {
       border-right: 1px solid #DDDDEE;
       position: absolute;
