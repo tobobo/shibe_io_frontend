@@ -10,7 +10,7 @@ ShibeApiStatus = Ember.Component.extend
         method: 'get'
         xhrFields:
           withCredentials: true
-        url: @get('apiHost')
+        url: window.ENV.SHIBE_API_URL
         success: (data) =>
           if data?
             @set 'up', true
