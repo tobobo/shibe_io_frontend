@@ -28,11 +28,19 @@ body {
   }
 }
 
+$scroll-animation-time: 8s;
+$scroll-pause-percent: 70%;
+$scroll-snap-time: 15%;
+$scroll-snap-percent: 100% - $scroll-snap-time;
+
 @-webkit-keyframes scrollContent {
   0% {
     -webkit-transform: translate(0, 0);
   }
-  92% {
+  #{$scroll-pause-percent + 3%} {
+    -webkit-transform: translate(-100%, 0);
+  }
+  #{$scroll-snap-percent} {
     -webkit-transform: translate(-100%, 0);
   }
   100% {
@@ -44,7 +52,10 @@ body {
   0% {
     -webkit-transform: translate(0, 0);
   }
-  92% {
+  #{$scroll-pause-percent} {
+    -webkit-transform: translate(100%, 0);
+  }
+  #{$scroll-snap-percent - 1%} {
     -webkit-transform: translate(100%, 0);
   }
   100% {
@@ -56,18 +67,16 @@ body {
 @mixin scroll-content {
   .scroll-content {
     position: relative;
-    transition: all 0.5s ease-in-out;
     .scroll-content-inner {
       position: absolute;
-      transition: all 0.5s ease-in-out;
     }
   }
 
   &:hover {
     .scroll-content.scroll-active {
-      -webkit-animation: scrollContentOuter 8s linear infinite;
+      -webkit-animation: scrollContentOuter $scroll-animation-time linear infinite;
       .scroll-content-inner {
-        -webkit-animation: scrollContent 8s linear infinite;
+        -webkit-animation: scrollContent $scroll-animation-time ease-out infinite;
       }
     }    
   }
@@ -76,7 +85,8 @@ body {
 
 
 .application-view {
-  max-width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .shibe-transaction-list {
