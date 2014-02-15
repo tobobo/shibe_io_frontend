@@ -4,7 +4,7 @@ ShibeTransaction = Ember.Component.extend
   classNames: ['shibe-transaction']
   classNameBindings: ['isCredit:credit:debit', 'isPending:pending']
   didInsertElement: ->
-    @send 'assignScrollyness'
+    @send 'assignScrolliness'
   personField: (->
     if @get('transaction.status') == Transaction.STATUS.DEPOSIT
       "deposit"
@@ -57,8 +57,8 @@ ShibeTransaction = Ember.Component.extend
   ).property 'isCredit'
 
   actions:
-    assignScrollyness: ->
-      scrollynessAssignment = =>
+    assignScrolliness: ->
+      scrollinessAssignment = =>
         @get('scrollElements').forEach (element) ->
           if element.outerWidth() < element[0].scrollWidth
             element.addClass('scroll-active')
@@ -68,7 +68,7 @@ ShibeTransaction = Ember.Component.extend
       @$('.scroll-content').each ->
         scrollElements.push $(this)
       @set 'scrollElements', scrollElements
-      scrollynessAssignment()
-      $(window).bind 'resize', scrollynessAssignment
+      scrollinessAssignment()
+      $(window).bind 'resize', scrollinessAssignment
 
 `export default ShibeTransaction`
