@@ -1,0 +1,13 @@
+{{#if currentUser.id}}
+  <span>Balance: Ɖ{{currentUser.balance}}</span>
+  <span>
+    {{#if currentUser.depositAddress}}
+      Deposit address: {{currentUser.depositAddress}}
+    {{else}}
+      We are generating your deposit address. It will be available shortly.
+    {{/if}}
+  </span>
+  <span>
+    <a href="#" {{action 'logout'}}>Log Out</a>
+  </span>
+{{/if}}

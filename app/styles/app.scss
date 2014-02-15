@@ -13,9 +13,17 @@ body {
   }
 }
 
+.shibe-info {
+  font-size: 0.75em;
+  margin: 1em 0;
+  span {
+    margin: 0 0.5em 0 0;
+  }
+}
+
 .shibe-transaction-list {
   border-radius: 10px;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.075);
   max-width: 1024px;
 
   .shibe-transaction {
@@ -44,6 +52,7 @@ body {
     .arrow {
       width: 5%;
       left: 0;
+      text-align: center;
     }
 
     .person {
