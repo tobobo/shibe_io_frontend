@@ -40,7 +40,6 @@ ShibeTransaction = Ember.Component.extend
 
   ).property 'transaction.status', 'transaction.createdAt'
   isPending: (->
-    console.log @get('transaction.status')
     @get('transaction.status') not in [Transaction.STATUS.COMPLETE, Transaction.STATUS.DEPOSIT]
   ).property 'transaction.status'
   isCredit: (->
@@ -56,16 +55,19 @@ ShibeTransaction = Ember.Component.extend
     if @get('isCredit') then '+'
     else '-'
   ).property 'isCredit'
+
   actions:
     assignScrollyness: ->
       scrollynessAssignment = =>
-        @$('.scroll-content').each ->
-          $this = $(@)
-          console.log $this.outerWidth(), $this[0].scrollWidth
-          if $this.outerWidth() < $this[0].scrollWidth
-            $this.addClass('scroll-active')
+        @get('scrollElements').forEach (element) ->
+          if element.outerWidth() < element[0].scrollWidth
+            element.addClass('scroll-active')
           else
-            $this.removeClass('scroll-active')
+            element.removeClass('scroll-active')
+      scrollElements = []
+      @$('.scroll-content').each ->
+        scrollElements.push $(this)
+      @set 'scrollElements', scrollElements
       scrollynessAssignment()
       $(window).bind 'resize', scrollynessAssignment
 
