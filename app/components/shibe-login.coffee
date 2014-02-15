@@ -141,7 +141,7 @@ ShibeLoginComponent = Ember.Component.extend
             @set 'acceptanceAuthError', true
             @set 'loading', false
       else
-        if @get('email')? and @get('password')?
+        if not Ember.isEmpty(@get('email')) and not Ember.isEmpty(@get('password'))
           @set 'loading', true
           $.ajax
             method: 'POST'
