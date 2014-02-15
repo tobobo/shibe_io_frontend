@@ -1,4 +1,7 @@
 $small-text: 0.75em;
+$red: #F05729;
+$green: #189E3C;
+
 
 body {
   margin: 40px;
@@ -30,6 +33,12 @@ body {
     position: relative;
     width: 100%;
     height: 2.5em;
+    transition: box-shadow 0.25s ease-in-out;
+    
+    &:hover {
+      z-index: 3;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+    }
 
     &:nth-of-type(even) {
       background-color: #F8F8FF;
@@ -73,19 +82,15 @@ body {
       font-weight: 500;
     }
 
-    .indicator {
-      opacity: 0.75
-    }
-
     &.credit {
       .indicator {
-        color: green;
+        color: $green;
       }
     }
 
     &.debit {
       .indicator {
-        color: red;
+        color: $red;
       }
     }
 
@@ -117,12 +122,12 @@ body {
     transition: all 1s ease-in-out;
 
     &.up {
-      background-color: green;
+      background-color: $green;
       box-shadow: $inset-shadow, 0 0 0.5em rgba(0, 255, 0, 0.75);
     }
 
     &.down {
-      background-color: red;
+      background-color: $red;
       box-shadow: $inset-shadow, 0 0 0.5em rgba(255, 0, 0, 0.75);
     }
 
