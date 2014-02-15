@@ -53,21 +53,10 @@ ApplicationController = Ember.ObjectController.extend
 
   actions:
     getIdFromCookie: ->
-      console.log 'getting cookie'
-      cookie = $.cookie @get('cookieName')
-      if cookie
-        console.log cookie
-        matches =cookie.match(/"([^"]*)"/)
-        if matches? and matches.length > 1
-          console.log 'matches'
-          id = matches[1]
-          console.log 'id', id
-          if id
-            @set 'currentUserId', id
-            console.log 'aftersetting', @get('currentUserId')
+      @set 'currentUserId', window.getIdFromCookie()
 
     removeIdCookie: ->
-      $.cookie @get('cookieName'), null
+      window.removeIdCookie()
 
     logout: ->
       $.ajax

@@ -50,8 +50,29 @@
 
   <!-- endbuild -->
 
-  <!-- build:js(tmp/result) /assets/app.min.js -->
+  <script type="text/javascript">
+    (window.getIdFromCookie = function() {
+      cookie = $.cookie('shibe');
+      if (!!cookie) {
+        matches =cookie.match(/"([^"]*)"/);
+        if (!!matches && matches.length > 1) {
+          id = matches[1];
+          if (!!id) {
+            window.currentUserId = id;
+            return id;
+          }
+        }
+      }
+    })();
 
+
+    window.removeIdCookie = function() {
+      window.currentUserId = null;
+      $.cookie('shibe', null); 
+    }
+  </script>
+
+  <!-- build:js(tmp/result) /assets/app.min.js -->
     <script src="/assets/app.js"></script>
     <script src="/assets/templates.js"></script>
 
