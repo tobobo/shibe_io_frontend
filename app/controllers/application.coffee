@@ -43,7 +43,6 @@ ApplicationController = Ember.ObjectController.extend
   ).property()
 
   currentUserIdDidChange: (->
-    console.log 'user id changed', @get('currentUserId')
     unless @get('currentUserId')?
       @send 'removeIdCookie'
   ).observes 'currentUserId'

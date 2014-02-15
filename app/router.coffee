@@ -20,4 +20,8 @@ Router.map ->
     @resource 'acceptance',
       path: ':acceptanceCode'
 
+  @resource 'history',
+    path: 'history',
+    templateName: 'history'
+
 `export default Router`

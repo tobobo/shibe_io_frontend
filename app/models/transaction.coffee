@@ -12,6 +12,7 @@ Transaction = DS.Model.extend
   confirmationCode: DS.attr 'string'
   userEmail: DS.attr 'string'
   userPassword: DS.attr 'string'
+  completedAt: DS.attr 'date'
 
 constants =
   STATUS: ['PENDING', 'ANNOUNCED', 'DEPOSIT']
@@ -22,6 +23,6 @@ for c, a of constants
   Transaction[c] = {}
   for i, v of a
     Transaction[c][i] = v
-    Transaction[c][v] = i 
+    Transaction[c][v] = parseInt(i) 
 
 `export default Transaction`

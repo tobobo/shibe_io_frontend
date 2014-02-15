@@ -10,3 +10,19 @@ body {
     font-weight: 500;
   }
 }
+
+.shibe-transaction {
+  .amount {
+    font-weight: 500;
+
+    &.credit {
+      color: green;
+    }
+
+    &.debit {
+      color: red;
+    }
+
+  }
+}
+
