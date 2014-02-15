@@ -1,6 +1,8 @@
 IndexController = Ember.ObjectController.extend
   actions:
     goToHistory: ->
-      @transitionToRoute 'history'
+      Ember.get('App.applicationController').send 'getIdFromCookie'
+      Ember.run.next =>
+        @transitionToRoute 'history'
 
 `export default IndexController`
