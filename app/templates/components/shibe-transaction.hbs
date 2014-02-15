@@ -1,1 +1,4 @@
-{{personField}} | {{status}} | <span {{bind-attr class=":amount isCredit:credit:debit"}}>{{symbol}}Ɖ{{transaction.amount}}</span>
+<div {{bind-attr class=":arrow isCredit:credit:debit"}}>{{arrow}}</div>
+<div class="person">{{personField}}</div>
+<div class="status">{{status}}</div>
+<div {{bind-attr class=":amount isCredit:credit:debit"}}>{{symbol}}Ɖ{{transaction.amount}}</div>

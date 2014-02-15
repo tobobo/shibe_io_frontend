@@ -33,6 +33,12 @@ ShibeTransaction = Ember.Component.extend
           @get('transaction.createdAt')
 
   ).property 'transaction.status', 'transaction.createdAt'
+  arrow: (->
+    if @get('isCredit')
+      '◢'
+    else
+      '◤'
+  ).property 'isCredit'
   isCredit: (->
     @get('transaction.receiverId') == @get('currentUser.id')
   ).property 'transaction.receiverId', 'currentUser.id'
