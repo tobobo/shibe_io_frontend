@@ -37,7 +37,7 @@ $scroll-snap-percent: 100% - $scroll-snap-time;
   0% {
     -webkit-transform: translate(0, 0);
   }
-  #{$scroll-pause-percent + 3%} {
+  #{$scroll-pause-percent} {
     -webkit-transform: translate(-100%, 0);
   }
   #{$scroll-snap-percent} {
@@ -55,7 +55,7 @@ $scroll-snap-percent: 100% - $scroll-snap-time;
   #{$scroll-pause-percent} {
     -webkit-transform: translate(100%, 0);
   }
-  #{$scroll-snap-percent - 1%} {
+  #{$scroll-snap-percent} {
     -webkit-transform: translate(100%, 0);
   }
   100% {
@@ -76,7 +76,7 @@ $scroll-snap-percent: 100% - $scroll-snap-time;
     .scroll-content.scroll-active {
       -webkit-animation: scrollContentOuter $scroll-animation-time linear infinite;
       .scroll-content-inner {
-        -webkit-animation: scrollContent $scroll-animation-time ease-out infinite;
+        -webkit-animation: scrollContent $scroll-animation-time linear infinite;
       }
     }    
   }
