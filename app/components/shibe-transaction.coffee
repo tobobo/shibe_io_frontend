@@ -2,9 +2,8 @@
 
 ShibeTransaction = Ember.Component.extend
   classNames: ['shibe-transaction']
+  classNameBindings: ['isCredit:credit:debit', 'isPending:pending']
   personField: (->
-    console.log @get('transaction.to')
-    console.log 'transaction status', @get('transaction.status')
     if @get('transaction.status') == Transaction.STATUS.DEPOSIT
       "Deposit"
     else if @get('isCredit')
@@ -13,7 +12,6 @@ ShibeTransaction = Ember.Component.extend
       @get 'transaction.to'
   ).property 'transaction.status', 'transaction.from'
   status: (->
-    console.log 'getting status'
     if @get('transaction.status') in [Transaction.STATUS.DEPOSIT, Transaction.STATUS.COMPLETE, Transaction.STATUS.WITHDRAWAL]
       @get('transaction.createdAt')
     else
@@ -33,16 +31,20 @@ ShibeTransaction = Ember.Component.extend
           @get('transaction.createdAt')
 
   ).property 'transaction.status', 'transaction.createdAt'
+  isPending: (->
+    console.log @get('transaction.status')
+    @get('transaction.status') not in [Transaction.STATUS.COMPLETE, Transaction.STATUS.DEPOSIT]
+  ).property 'transaction.status'
+  isCredit: (->
+    @get('transaction.receiverId') == @get('currentUser.id')
+  ).property 'transaction.receiverId', 'currentUser.id'
   arrow: (->
     if @get('isCredit')
       '◢'
     else
       '◤'
   ).property 'isCredit'
-  isCredit: (->
-    @get('transaction.receiverId') == @get('currentUser.id')
-  ).property 'transaction.receiverId', 'currentUser.id'
-  symbol: (->
+  sign: (->
     if @get('isCredit') then '+'
     else '-'
   ).property 'isCredit'

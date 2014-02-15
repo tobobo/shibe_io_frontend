@@ -14,41 +14,22 @@ ApplicationController = Ember.ObjectController.extend
         , (error) =>
           @set 'currentUserId', null
           @set 'currentUserLoading', false
-      null
+      id: @get('currentUserId')
+      isLoading: true
   ).property 'currentUserId'
+
   logoutUrl: (->
     @get('apiHost') + '/users/logout'
   ).property 'apiHost'
-  checkingApi: true
+
   init: ->
     App.set 'applicationController', @
     @send 'getIdFromCookie'
-  apiIsUp: ((prop, value) ->
-    if value? then value
-    else
-      $.ajax
-        method: 'get'
-        xhrFields:
-          withCredentials: true
-        url: @get('apiHost')
-        success: (data) =>
-          if data?
-            @set 'apiIsUp', true
-          @set 'checkingApi', false
-        error: (error) =>
-          if error?
-            @set 'apiIsUp', false
-          @set 'checkingApi', false
-      false
-  ).property()
 
   currentUserIdDidChange: (->
     unless @get('currentUserId')?
       @send 'removeIdCookie'
   ).observes 'currentUserId'
-
-
-  cookieName: 'shibe'
 
   actions:
     getIdFromCookie: ->

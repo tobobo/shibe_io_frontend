@@ -1,4 +1,6 @@
-{{#if currentUser.id}}
+{{#if currentUser.isLoading}}
+  Loading user info...
+{{else}}
   <span>Balance: Ɖ{{currentUser.balance}}</span>
   <span>
     {{#if currentUser.depositAddress}}

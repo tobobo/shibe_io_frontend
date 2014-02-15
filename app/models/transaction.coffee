@@ -15,7 +15,7 @@ Transaction = DS.Model.extend
   completedAt: DS.attr 'date'
 
 constants =
-  STATUS: ['PENDING', 'ANNOUNCED', 'DEPOSIT']
+  STATUS: ['PENDING', 'ANNOUNCED', 'DEPOSIT', 'COMPLETE']
   CONFIRMATION: ['PENDING', 'ACCEPTED']
   ACCEPTANCE: ['PENDING', 'ACCEPTED']
 

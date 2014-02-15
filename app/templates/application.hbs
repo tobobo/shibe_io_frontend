@@ -2,16 +2,4 @@
 
 {{outlet}}
 
-<p>
-  <small>
-    {{#if apiIsUp}}
-      The API is up! Hooray!
-    {{else}}
-      {{#if checkingApi}}
-        <em>Checking API status...</em>
-      {{else}}
-        The API could not be accessed.
-      {{/if}}
-    {{/if}}
-  <small>
-</p>
+{{shibe-api-status}}
