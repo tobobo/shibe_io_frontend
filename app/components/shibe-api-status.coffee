@@ -1,6 +1,8 @@
 ShibeApiStatus = Ember.Component.extend
   classNames: ['api-status']
-  checking: true;
+  classNameBindings: ['align']
+  align: 'left'
+  checking: true
   up: ((prop, value) ->
     if value? then value
     else
@@ -19,5 +21,10 @@ ShibeApiStatus = Ember.Component.extend
           @set 'checking', false
       false
   ).property()
+  alignLeft: (->
+    if not @get('align')? or @get('align') == 'left'
+      true
+  ).property 'align'
+  alignRight: Ember.computed.equal 'align', 'right'
 
 `export default ShibeApiStatus`

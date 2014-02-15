@@ -2,6 +2,14 @@ ApplicationController = Ember.ObjectController.extend
   apiHost: window.ENV.SHIBE_API_URL
   currentUserId: null
   currentUserLoading: false
+  statusIsRightAligned: (->
+    console.log 'curent route', @get('currentRoute')
+    @get('currentRouteName') == 'history'
+  ).property 'currentRouteName'
+  statusAlignment: (->
+    if @get 'statusIsRightAligned'
+      'right'
+  ).property 'statusIsRightAligned'
   currentUser: ((prop, value) ->
     @set 'currentUserLoading', true
     if value? then value

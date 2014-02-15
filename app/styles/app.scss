@@ -100,11 +100,13 @@ body {
     }
 
     &:first-of-type {
-      border-radius: $transaction-border-radius $transaction-border-radius 0 0 ;
+      border-top-left-radius: $transaction-border-radius $transaction-border-radius;
+      border-top-right-radius: $transaction-border-radius $transaction-border-radius;
     }
 
     &:last-of-type {
-      border-radius: 0 0 $transaction-border-radius $transaction-border-radius;
+      border-bottom-left-radius: $transaction-border-radius $transaction-border-radius;
+      border-bottom-right-radius: $transaction-border-radius $transaction-border-radius;
     }
 
     & > div {
@@ -176,10 +178,15 @@ body {
 }
 
 .api-status {
-  text-align: right;
   font-size: $small-text;
   $inset-shadow: inset 0 0 0.5em rgba(0, 0, 0, 0.5);
   margin: 1em 0.5em;
+  &.right {
+    text-align: right;
+    .indicator {
+      margin: 0 0 0 0.5em;
+    }
+  }
   .indicator {
     display: inline-block;
     position: relative;
@@ -190,17 +197,19 @@ body {
     border-radius: 0.5em;
     box-shadow: $inset-shadow;
     opacity: 0.85;
-    margin-left: 0.5em;
-    transition: all 1s ease-in-out;
+    margin: 0 0.5em 0 0;
+    transition: all 1s ease-in;
 
     &.up {
       background-color: $green;
       box-shadow: $inset-shadow, 0 0 0.5em rgba(0, 255, 0, 0.75);
+      transition: all 2s ease-out;
     }
 
     &.down {
       background-color: $red;
       box-shadow: $inset-shadow, 0 0 0.5em rgba(255, 0, 0, 0.75);
+      transition: all 0.1s ease-out;
     }
 
     &.checking {
