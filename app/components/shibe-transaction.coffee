@@ -23,8 +23,12 @@ ShibeTransaction = Ember.Component.extend
         else if @get('transaction.confirmation') == Transaction.CONFIRMATION.ACCEPTED
           "Confirmed"
       else
-        if @get('transaction.acceptance') == Transaction.ACCEPTANCE.PENDING
-          "Pending"
+        if @get('transaction.confirmation') == Transaction.CONFIRMATION.PENDING
+          "Not yet confirmed. Resend confirmation?"
+        if @get('transaction.confirmation') == Transaction.CONFIRMATION.INSUFFICIENT_FUNDS
+          "Insufficient funds. Please deposit and re-confirm."
+        else if @get('transaction.acceptance') == Transaction.ACCEPTANCE.PENDING
+          "Pending acceptance"
         else
           @get('transaction.createdAt')
 
