@@ -12,7 +12,6 @@ ApplicationController = Ember.ObjectController.extend
           @set 'currentUser', user
           @set 'currentUserLoading', false
         , (error) =>
-          console.log 'user error', error
           @set 'currentUserId', null
           @set 'currentUserLoading', false
       null
