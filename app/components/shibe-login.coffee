@@ -115,6 +115,7 @@ ShibeLoginComponent = Ember.Component.extend
               @set 'confirmationDetailsMissing', false
               @set 'transactionConfirmed', true
               @set 'loading', false
+              @sendAction 'afterConfirmation'
               App.applicationController.send 'getIdFromCookie'
             , (error) =>
               @set 'confirmationDetailsMissing', false
@@ -155,6 +156,7 @@ ShibeLoginComponent = Ember.Component.extend
               App.applicationController.send 'getIdFromCookie'
               @set 'loginError', false
               @set 'userInactive', false
+              @sendAction 'afterLogin'
             error: (error) =>
               @set 'loginError', true
               @set 'userInactive', false
