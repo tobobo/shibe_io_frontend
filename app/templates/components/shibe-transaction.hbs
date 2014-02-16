@@ -1,4 +1,4 @@
 <div class="arrow indicator">{{arrow}}</div>
 <div class="person">{{#scroll-content}}{{personField}} <span class="subject">{{transaction.subject}}<span>{{/scroll-content}}</div>
 <div class="status">{{#scroll-content}}{{status}}{{/scroll-content}}</div>
-<div class="amount indicator">{{sign}}Ɖ{{transaction.amount}}</div>
+<div class="amount indicator">{{#scroll-content}}<span class="sign">{{sign}}Ɖ</span> <span class="value">{{transaction.amount}}</span>{{/scroll-content}}</div>

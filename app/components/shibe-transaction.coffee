@@ -16,9 +16,6 @@ ShibeTransaction = Ember.Component.extend
       else
         @get 'transaction.to'
   ).property 'transaction.status', 'transaction.from', 'transaction.to', 'transaction.receiverAddress'
-  subject: (->
-
-  ).property 'transaction.subject', 'transaction.receiverAddress'
   status: (->
     if @get('transaction.status') in [Transaction.STATUS.DEPOSIT, Transaction.STATUS.COMPLETE, Transaction.STATUS.WITHDRAWAL]
       @get('transaction.createdAt')
